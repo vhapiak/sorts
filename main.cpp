@@ -13,7 +13,7 @@ struct Data {
 };
 
 int main() {
-    const std::size_t N = 10;
+    const std::size_t N = 1000000;
     const std::vector<Data> dataSet = {
         {"sorted", generateSorted(N)},
         {"random", generateRandom(N)},

@@ -7,6 +7,8 @@
 #include "types.hpp"
 
 #include "algo/CMergeSort.hpp"
+#include "algo/CStdQSort.hpp"
+#include "algo/CStdSort.hpp"
 
 struct Data {
     const char* m_name;
@@ -14,7 +16,7 @@ struct Data {
 };
 
 int main() {
-    const std::size_t N = 1000000;
+    const std::size_t N = 100000;
     const std::vector<Data> dataSet = {
         {"sorted", generateSorted(N)},
         {"random", generateRandom(N)},
@@ -24,6 +26,8 @@ int main() {
     using SortPtr = std::shared_ptr<ISort>;
     const std::vector<SortPtr> algos = {
         SortPtr(new CMergeSort()),
+        SortPtr(new CStdSort()),
+        SortPtr(new CStdQSort()),
     };
 
     for (const auto& algo : algos) {
@@ -35,9 +39,10 @@ int main() {
             auto end = std::chrono::system_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-            bool sorted = check(array.m_data);
-            std::cout << "\tTest: " << array.m_name << ' ' << sorted << ' ' << elapsed.count()
-                      << "ms" << std::endl;
+            if (!check(array.m_data)) {
+                throw std::runtime_error("sort failed");
+            }
+            std::cout << "\tTest: " << array.m_name << ' ' << elapsed.count() << "ms" << std::endl;
         }
     }
 

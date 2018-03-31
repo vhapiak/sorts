@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <memory>
 
@@ -29,9 +30,14 @@ int main() {
         auto data = dataSet;
         std::cout << "Algo: " << algo->name() << std::endl;
         for (auto& array : data) {
+            auto start = std::chrono::system_clock::now();
             algo->sort(array.m_data);
+            auto end = std::chrono::system_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
             bool sorted = check(array.m_data);
-            std::cout << "\tTest: " << array.m_name << ' ' << sorted << std::endl;
+            std::cout << "\tTest: " << array.m_name << ' ' << sorted << ' ' << elapsed.count()
+                      << "ms" << std::endl;
         }
     }
 

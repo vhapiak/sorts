@@ -7,6 +7,7 @@
 #include "types.hpp"
 
 #include "algo/CMergeSort.hpp"
+#include "algo/CQuickSort.hpp"
 #include "algo/CStdQSort.hpp"
 #include "algo/CStdSort.hpp"
 
@@ -16,7 +17,7 @@ struct Data {
 };
 
 int main() {
-    const std::size_t N = 100000;
+    const std::size_t N = 1000000;
     const std::vector<Data> dataSet = {
         {"sorted", generateSorted(N)},
         {"random", generateRandom(N)},
@@ -25,6 +26,7 @@ int main() {
 
     using SortPtr = std::shared_ptr<ISort>;
     const std::vector<SortPtr> algos = {
+        SortPtr(new CQuickSort()),
         SortPtr(new CMergeSort()),
         SortPtr(new CStdSort()),
         SortPtr(new CStdQSort()),

@@ -6,6 +6,7 @@
 #include "generator.hpp"
 #include "types.hpp"
 
+#include "algo/CHeapSort.hpp"
 #include "algo/CMergeSort.hpp"
 #include "algo/CQuickSort.hpp"
 #include "algo/CStdQSort.hpp"
@@ -26,10 +27,8 @@ int main() {
 
     using SortPtr = std::shared_ptr<ISort>;
     const std::vector<SortPtr> algos = {
-        SortPtr(new CQuickSort()),
-        SortPtr(new CMergeSort()),
-        SortPtr(new CStdSort()),
-        SortPtr(new CStdQSort()),
+        SortPtr(new CHeapSort()), SortPtr(new CQuickSort()), SortPtr(new CMergeSort()),
+        SortPtr(new CStdSort()),  SortPtr(new CStdQSort()),
     };
 
     for (const auto& algo : algos) {
